@@ -1,0 +1,42 @@
+[
+  {
+    "rule": "My First Rule",
+    "severity": "low",
+    "risk_score": 21.0,
+    "timestamp": "2026-07-06T04:32:40.854Z",
+    "anomaly_score": 1.0,
+    "is_anomaly": false
+  },
+  {
+    "rule": "My First Rule",
+    "severity": "low",
+    "risk_score": 21.0,
+    "timestamp": "2026-07-06T04:02:40.903Z",
+    "anomaly_score": 1.0,
+    "is_anomaly": false
+  },
+  {
+    "rule": "Kerberoasting Detection - RC4 Ticket Request",
+    "severity": "high",
+    "risk_score": 73.0,
+    "timestamp": "2026-07-06T04:30:22.939Z",
+    "anomaly_score": 0.0,
+    "is_anomaly": false
+  },
+  {
+    "rule": "Kerberoasting Detection - RC4 Ticket Request",
+    "severity": "high",
+    "risk_score": 73.0,
+    "timestamp": "2026-07-06T04:30:22.945Z",
+    "anomaly_score": 0.0,
+    "is_anomaly": false
+  },
+  {
+    "rule": "Kerberoasting Detection - RC4 Ticket Request",
+    "severity": "high",
+    "risk_score": 73.0,
+    "timestamp": "2026-07-06T04:30:22.949Z",
+    "anomaly_score": 0.0,
+    "is_anomaly": false
+  }
+]
