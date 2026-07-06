@@ -1,14 +1,18 @@
 from elasticsearch import Elasticsearch
 from sklearn.ensemble import IsolationForest
+from dotenv import load_dotenv
 import numpy as np
 import json
+import os
 from datetime import datetime
 import urllib3
 urllib3.disable_warnings()
 
+load_dotenv()
+
 es = Elasticsearch(
-    "https://192.168.56.101:9200",
-    basic_auth=("elastic", "Cf5D=MJy2n9lM*5oNJC5"),
+    os.getenv("ELASTIC_HOST"),
+    basic_auth=(os.getenv("ELASTIC_USER"), os.getenv("ELASTIC_PASSWORD")),
     verify_certs=False
 )
 

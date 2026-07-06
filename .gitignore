@@ -1,0 +1,5 @@
+.env
+*.env
+scored_alerts.json
+__pycache__/
+*.pyc
