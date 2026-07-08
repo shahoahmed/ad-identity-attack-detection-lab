@@ -237,6 +237,71 @@ ad-identity-attack-detection-lab/
 
 ---
 
+## Security Remediation: Credential Exposure and Rotation
+
+### What Happened
+
+During the initial build of this project I hardcoded the Elastic 
+superuser password directly inside `ai-layer/isolation_scorer.py`. 
+That file was committed and pushed to this public GitHub repository, 
+meaning the credential was briefly visible in the commit history.
+
+Anyone who looks at the early commits of this repo can see it was there.
+Rather than attempt to hide or rewrite history, I am documenting this 
+transparently as a real security incident with a full remediation process.
+
+### What I Did Wrong
+
+- Stored a production credential in plain text inside application code
+- Committed and pushed that file to a public repository before recognizing the risk
+- Did not have a .gitignore or .env pattern in place from the start
+
+### How I Fixed It
+
+**Step 1: Moved credentials out of code**
+Created a `.env` file to store all sensitive values and updated 
+`isolation_scorer.py` to read credentials dynamically using 
+`python-dotenv` and `os.getenv()` instead of hardcoded strings.
+
+**Step 2: Added .gitignore**
+Created a `.gitignore` file listing `.env` to ensure credentials 
+can never be accidentally pushed to GitHub again.
+
+**Step 3: Rotated the compromised password**
+Removing a credential from code does not undo the exposure. The 
+password was visible in commit history and must be treated as 
+compromised. SSH'd into the Elastic SIEM VM and rotated the 
+elastic superuser password using the built in tool:
+
+```bash
+sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
+```
+
+Updated the new password in the `.env` file and verified Kibana 
+login was successful with the rotated credential.
+
+**Step 4: Documented the full process**
+Rather than delete or rebase the commit history to hide the mistake, 
+documenting it here transparently. The mistake happened. 
+The fix was applied correctly. That is what matters.
+
+### Key Lessons Learned
+
+- Credentials should never exist in application code, even in a lab environment
+- A `.env` file and `.gitignore` should be the first thing created in any project that touches sensitive values
+- Removing a credential from code does not undo the exposure. Rotation is always required
+- Git history is permanent and public. Treat every commit to a public repo as if it will be read by an attacker
+- Owning mistakes and remediating them properly is a core security engineering skill
+
+### Interview Context
+
+This is a real example of identifying a security misconfiguration, 
+applying industry standard secrets management practices, and executing 
+a proper credential rotation. The entire process is documented with 
+timestamps in this repository's commit history.
+
+---
+
 ## About
 
 Built by Shaho Ahmed, a Cybersecurity Engineering graduate from George Mason University with hands-on experience in penetration testing (Verizon), cloud security and DoD compliance (Nova Hitech), and SOC detection engineering.
