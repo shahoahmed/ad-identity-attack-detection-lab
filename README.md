@@ -302,10 +302,13 @@ timestamps in this repository's commit history.
 
 ---
 
-## About
+## Portfolio Labs
 
-Built by Shaho Ahmed, a Cybersecurity Engineering graduate from George Mason University with hands-on experience in penetration testing (Verizon), cloud security and DoD compliance (Nova Hitech), and SOC detection engineering.
+These are my most recent completed labs. Each one was built from scratch, documented end to end, and grounded in real-world threat intelligence. I learned something new in every single one and the process is all here for you to see.
 
-**Certifications:** CompTIA Security+, CompTIA Network+, Oracle Cloud Infrastructure Multicloud Architect, Oracle Generative AI Professional
+Check them out and if you are just as passionate and curious about this field as I am, connect with me on LinkedIn. Always open to meeting like-minded people in the security community.
+
+- [AI-Augmented AD Identity Attack Detection Lab](https://github.com/shahoahmed/ad-identity-attack-detection-lab) - Custom Elastic SIEM detection rules, Python ML alert scoring, and local LLM triage via Ollama
+- [Pi-hole Network DNS Lab](https://github.com/shahoahmed/pihole-network-dns-lab) - Self-hosted network-wide ad blocking with DNS-level threat filtering across all home devices
 
 **Connect:** [LinkedIn](https://linkedin.com/in/shaho-ahmed) | [GitHub](https://github.com/shahoahmed)
