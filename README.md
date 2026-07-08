@@ -293,13 +293,6 @@ The fix was applied correctly. That is what matters.
 - Git history is permanent and public. Treat every commit to a public repo as if it will be read by an attacker
 - Owning mistakes and remediating them properly is a core security engineering skill
 
-### Interview Context
-
-This is a real example of identifying a security misconfiguration, 
-applying industry standard secrets management practices, and executing 
-a proper credential rotation. The entire process is documented with 
-timestamps in this repository's commit history.
-
 ---
 
 ## Portfolio Labs
