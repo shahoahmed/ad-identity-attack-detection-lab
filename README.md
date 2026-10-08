@@ -19,14 +19,14 @@ Every technique simulated is mapped to MITRE ATT&CK and reflects active threat a
 
 ```
 [Kali Linux Attacker]          [Windows Server 2022 Domain Controller]
-   192.168.56.103                        192.168.56.11
+   (static lab IP)                       (static lab IP)
         |                                      |
         |     Host-Only Network (VirtualBox)   |
         |______________________________________|
                            |
                    [Elastic SIEM]
                    Ubuntu 22.04
-                   192.168.56.101
+                   (static lab IP)
                    Elasticsearch + Kibana 8.19.18
 ```
 
@@ -80,7 +80,7 @@ This fires on Windows Security Event 4769 with RC4 encryption type 0x17, which i
 
 ![Kerberoasting Alert Firing](screenshots/02-kerberoasting-alert-firing.jpg)
 
-*Custom Kerberoasting detection rule firing 3 High severity alerts against WIN-UKNVHJSR78K.soclab.local after Rubeus execution*
+*Custom Kerberoasting detection rule firing 3 High severity alerts against the Domain Controller after Rubeus execution (host identifiers redacted)*
 
 ---
 
@@ -157,7 +157,7 @@ Passes each scored alert to a local Llama 3.2 model running via Ollama. The LLM 
 
 ![DCSync Credential Dump](screenshots/05-dcsync-credential-dump-kali.jpg)
 
-*DCSync attack via Impacket from Kali dumping all domain credential hashes including Administrator, krbtgt, john.smith, jane.doe, and svc-backup*
+*DCSync attack via Impacket from Kali dumping all domain credential hashes including Administrator, krbtgt, the lab users, and the service account (all hashes redacted)*
 
 ---
 
@@ -230,10 +230,10 @@ ad-identity-attack-detection-lab/
 
 ## Active Directory Lab Setup
 
-- Domain: `soclab.local`
-- Domain Controller: `WIN-UKNVHJSR78K` (Windows Server 2022)
-- Lab Users: `john.smith`, `jane.doe`, `svc-backup`
-- `svc-backup` is a Domain Admin with an HTTP SPN registered, making it a realistic high-value Kerberoasting target
+- Domain: a single-forest lab domain
+- Domain Controller: Windows Server 2022
+- Lab Users: two standard user accounts and one backup service account
+- The backup service account is a Domain Admin with an HTTP SPN registered, making it a realistic high-value Kerberoasting target
 
 ---
 
@@ -292,6 +292,31 @@ The fix was applied correctly. That is what matters.
 - Removing a credential from code does not undo the exposure. Rotation is always required
 - Git history is permanent and public. Treat every commit to a public repo as if it will be read by an attacker
 - Owning mistakes and remediating them properly is a core security engineering skill
+
+---
+
+## OPSEC Lesson: Redacting Lab Evidence
+
+### What Happened
+
+The first published version of this README and its screenshots exposed lab network identifiers: static IPs, the Domain Controller hostname, the domain name, lab usernames, and DCSync hash output. Everything here ran in an isolated, throwaway lab on a host-only network, and those VMs and credentials do not exist in any real environment. It still did not meet the standard I hold myself to.
+
+### How I Fixed It
+
+- Replaced IPs, hostnames, the domain, and usernames in this README with generic descriptors
+- Pixelated hostnames, hashes, Kerberos keys, and local file paths in the screenshots
+- Left the original commits in history on purpose, consistent with how I handled the credential exposure above
+
+### For Anyone Building Their Own Lab
+
+Treat a lab write-up like a public incident report. Before you publish, check every screenshot and code block for:
+
+- IP addresses and subnet ranges, even private RFC 1918 ones
+- Hostnames, domain names, and usernames
+- Hashes, keys, tokens, and passwords
+- File paths that reveal your username or system layout
+
+A throwaway lab is low risk. The habit is what matters, because the same screenshot workflow will eventually touch a real environment. My later labs build redaction into the workflow before anything is published.
 
 ---
 
